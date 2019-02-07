@@ -28,9 +28,9 @@ export class RestService {
     }
 
     public static swap(from: number, to: number): Promise<Player[]> {
-        let url = BASE_URL + 'quintet?pull=${from}&push=${to}';
-        return fetch(url, init)
-                .then((response: Response) => response.json)
+        let url = BASE_URL + 'quintet?pull=' + from + '&push=' + to;
+        return fetch(url,init)
+                .then((response: Response) => response.json())
                 .then((playerz: any) => playersMapper(playerz.content));
     }
 

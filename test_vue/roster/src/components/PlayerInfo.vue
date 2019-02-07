@@ -35,7 +35,7 @@
           <div v-for="player of players" :key="player.num">
             <div class="swap-line">
               <div>{{ player.num }} - {{ player.player }}</div>
-              <div class="swap">
+              <div class="swap" v-on:click="onSwap(player.num)">
                 <i class="fas fa-sync" aria-hidden="true"></i>
               </div>
             </div>
@@ -65,6 +65,11 @@ export default class PlayerInfo extends Vue {
   @Emit("closed")
   private onClose() {
     this.show = false;
+  }
+
+  @Emit("swap")
+  private onSwap(num: number){
+    this.show= false;
   }
 }
 </script>

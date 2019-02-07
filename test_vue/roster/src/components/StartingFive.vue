@@ -11,7 +11,7 @@
         <div class="player-number">{{ player.num }}</div>
       </div>
     </div>
-    <PlayerInfo :player="player" :players="benchWarmers" @closed="clearAll"></PlayerInfo>
+    <PlayerInfo :player="player" :players="benchWarmers" @swap="swap" @closed="clearAll"></PlayerInfo>
   </div>
 </template>
 
@@ -49,7 +49,10 @@ export default class StartingFive extends Vue {
     {
       let _player = players.find(p => p.num === to);
       if (_player) {
-        this.playerChanged(_player);
+          RestService.getQuintet().then(playerz => (this.quintet = playerz));
+
+          this.playerChanged(_player);
+          this.clearAll();
       }
     }
   }

@@ -38,7 +38,7 @@ const sendSuccess = (res, body) => res.status(200).send(
 const stringifyCallback = (err, out, res) => {
     if (err) res.status(500).send(err)
     fs.writeFileSync('./lakers.csv', out, manageError)
-    sendSuccess(output.filter(isQuintet))
+    sendSuccess(res,output.filter(isQuintet))
 }
 
 const isTrue = (s) => String(s) === 'true' 
@@ -56,6 +56,7 @@ const findPlayer = (player, num, quintet) => {
 const swapPlayers = (req, res) => {
     let p1 = output.find(p => findPlayer(p, req.query.pull, true));
     let p2 = output.find(p => findPlayer(p, req.query.push, false));
+
     if (Boolean(p1) && Boolean(p2)) {
         p1.quintet = invert(p1.quintet);
         p2.quintet = invert(p2.quintet);
@@ -78,7 +79,7 @@ app.use(cors());
 
 app.get('/api/roster', (req, res) => sendSuccess(res, req.query.bench ? output.filter(p => isTrue(req.query.bench) ? isBenchwarmer(p) : isQuintet(p)) : output))
 app.get('/api/player/:num', (req, res) => sendSuccess(res, output.find(player => Number(player.num) === Number(req.params.num))))
-app.put('/api/player/quintet', swapPlayers)
+app.put('/api/quintet', swapPlayers)
 
 const PORT = 5000;
 
